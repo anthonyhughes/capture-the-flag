@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <string name="app_name">NFC</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="menu_settings">Settings</string>
-
+    <string name="hello">Hello World, CTF!</string>
+    <string name="app_name">Capture The Flag!</string>
+    <string name="write_to_tag">Write to Tag</string>
+    <string name="default_note_text">Send a message!</string>
 </resources>
