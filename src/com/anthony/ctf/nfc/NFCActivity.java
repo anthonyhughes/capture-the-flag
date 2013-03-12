@@ -15,6 +15,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.text.format.Time;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,7 +24,6 @@ public class NFCActivity extends Activity implements CreateNdefMessageCallback, 
 	NfcAdapter nfcAdapter;
 	NFCHelper nfcHelper;
 	TextView textView;
-	private static final int MESSAGE_SENT = 1;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +42,7 @@ public class NFCActivity extends Activity implements CreateNdefMessageCallback, 
 		nfcAdapter.setNdefPushMessageCallback(this, this);		
 		
 		nfcAdapter.setOnNdefPushCompleteCallback(this, this);
+		
 	}
 	
 	@Override
@@ -54,15 +55,17 @@ public class NFCActivity extends Activity implements CreateNdefMessageCallback, 
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.activity_nfc, menu);
+		if(nfcAdapter == null){
+			return super.onCreateOptionsMenu(menu);
+		}
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.activity_nfc, menu);
 		return true;
 	}
 
 	@Override
 	public void onNdefPushComplete(NfcEvent event) {
-		handler.obtainMessage(MESSAGE_SENT).sendToTarget();
-		
+		handler.obtainMessage(NFCHelper.MESSAGE_SENT).sendToTarget();
 	}
 
 	@Override
@@ -82,11 +85,19 @@ public class NFCActivity extends Activity implements CreateNdefMessageCallback, 
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
-            case MESSAGE_SENT:
+            case NFCHelper.MESSAGE_SENT:
                 Toast.makeText(getApplicationContext(), "Message sent!", Toast.LENGTH_LONG).show();
+    			textView.setText("Message sent!");
                 break;
             }
         }
     };
+    
+    @Override
+    public void onNewIntent(Intent intent){
+    	setIntent(intent);
+    }
+    
+    
 
 }

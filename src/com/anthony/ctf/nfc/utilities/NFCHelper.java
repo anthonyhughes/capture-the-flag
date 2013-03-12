@@ -10,6 +10,8 @@ import android.os.Parcelable;
 
 public class NFCHelper {
 	
+	public static final int MESSAGE_SENT = 1;
+	
     /** Creates a custom MIME type encapsulated in an NDEF record
     *
     * @param mimeType
