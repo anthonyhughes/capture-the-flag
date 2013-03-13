@@ -8,13 +8,6 @@
         android:id="@+id/linearLayout1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
-
-        <Button
-            android:id="@+id/write_tag"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/write_to_tag" >
-        </Button>
     </LinearLayout>
 
     <EditText
@@ -24,5 +17,12 @@
         android:gravity="top"
         android:text="@string/default_note_text" >
     </EditText>
+
+    <Button
+        android:id="@+id/write_tag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/write_to_tag" 
+        style="@style/ButtonText"/>
 
 </LinearLayout>

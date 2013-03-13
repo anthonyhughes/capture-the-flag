@@ -1,16 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!-- Strings -->
     <string name="hello">Hello World, CTF!</string>
     <string name="app_name">Capture The Flag!</string>
-    <string name="write_to_tag">Write to Tag</string>
+    <string name="write_to_tag">Write to a tag!</string>
     <string name="default_note_text">Send a message!</string>
     <string name="welcome">Welcome to CTF!</string>
+    
+    <!-- Buttons -->
     <string name="nfc_button">Pass the Flag</string>
     <string name="bluetooth_button">Check for Enemies</string>
-    <!-- <string name="nfc2">Pass a message</string> -->
-
+    <string name="maps_button">Check the map</string>
+    
+    <string name="enemy">Enemies located</string>
+    <string name="enemy_signal">Enemies proximity</string>
+    
+    <!-- Bluetooth information -->
+    <string name="title_paired_devices">Paired Devices</string>
+    <string name="title_other_devices">Enemies located -</string>
+    <string name="button_scan">Scan for devices</string>
+    <string name="none_found">No enemies found</string>
+    <string name="scanning">Scanning for devices</string>
+    <string name="select_device">Located enemies</string>
 
     <!-- Styles -->
     <style name="ButtonText">
@@ -20,11 +32,11 @@
         <item name="android:gravity">center</item>
         <item name="android:layout_margin">3dp</item>
         <item name="android:textSize">20sp</item>
-        <item name="android:textStyle">bold</item>
         <item name="android:shadowColor">#000000</item>
         <item name="android:shadowDx">1</item>
         <item name="android:shadowDy">1</item>
         <item name="android:shadowRadius">2</item>
+        <item name="android:typeface">serif</item>
     </style>
 
 </resources>

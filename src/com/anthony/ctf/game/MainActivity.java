@@ -7,13 +7,15 @@ import android.view.View;
 import android.widget.Button;
 
 import com.anthony.ctf.R;
+import com.anthony.ctf.bluetooth.DeviceListActivity;
+import com.anthony.ctf.maps.MapsActivity;
 import com.anthony.ctf.nfc.NFCActivity;
-import com.anthony.ctf.utilities.AndroidHelper;
 
 public class MainActivity extends Activity {
 	
 	Button nfcButton;
 	Button bluetoothButton;
+	Button mapsButton;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -22,8 +24,10 @@ public class MainActivity extends Activity {
 		
 		nfcButton = (Button) findViewById(R.id.button1);
 		findViewById(R.id.button1).setOnClickListener(nfcButtonListener);
-		bluetoothButton = (Button) findViewById(R.id.button2);
+		bluetoothButton = (Button) findViewById(R.id.button2); 
 		findViewById(R.id.button2).setOnClickListener(bluetoothButtonListener);
+		mapsButton = (Button) findViewById(R.id.button3);
+		findViewById(R.id.button3).setOnClickListener(mapsButtonListener);
 	}
 	
     private View.OnClickListener nfcButtonListener = new View.OnClickListener() {
@@ -37,10 +41,17 @@ public class MainActivity extends Activity {
     private View.OnClickListener bluetoothButtonListener = new View.OnClickListener() {
         @Override
         public void onClick(View arg0) {
-        	AndroidHelper.toast(MainActivity.this, "Hello2!");
+        	Intent bluetooth = new Intent(MainActivity.this, DeviceListActivity.class);
+        	startActivity(bluetooth);
         }
     };
 	
-	
+    private View.OnClickListener mapsButtonListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View arg0) {
+        	Intent maps = new Intent(MainActivity.this, MapsActivity.class);
+        	startActivity(maps);
+        }
+    };	
 	
 }
