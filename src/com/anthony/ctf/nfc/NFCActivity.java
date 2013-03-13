@@ -38,6 +38,7 @@ import android.view.View;
 import android.widget.EditText;
 import java.io.IOException;
 
+import com.anthony.ctf.R;
 import com.anthony.ctf.nfc.utilities.NFCHelper;
 import com.anthony.ctf.utilities.AndroidHelper;
 
