@@ -1,19 +1,3 @@
-/*
- * Copyright 2011, The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.anthony.ctf.nfc;
 
 import android.app.Activity;
@@ -29,24 +13,21 @@ import android.nfc.NfcAdapter;
 import android.nfc.Tag;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.view.View;
-import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import com.anthony.ctf.R;
+import com.anthony.ctf.game.Player;
 import com.anthony.ctf.nfc.utilities.NFCHelper;
 
-public class NFCActivity extends Activity {
+public class PassFlagActivity extends Activity {
 	
-    NfcAdapter mNfcAdapter;
-    EditText mNote;
-    ListView listView;
+	Player player;
+    TextView flagIndicator;
     
+    NfcAdapter mNfcAdapter;
     public boolean mResumed = false;
     public boolean mWriteMode = false;
+
     PendingIntent mNfcPendingIntent;
     IntentFilter[] mWriteTagFilters;
     IntentFilter[] mNdefExchangeFilters;
@@ -56,11 +37,20 @@ public class NFCActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
-
-        setContentView(R.layout.nfc);
-        mNote = ((EditText) findViewById(R.id.note));
-        mNote.addTextChangedListener(mTextWatcher);
-        listView = (ListView) findViewById(R.id.messageListView);
+        
+        setContentView(R.layout.pass_flag);
+        flagIndicator = (TextView) findViewById(R.id.indicator);
+        player = new Player();
+        
+        if(player.possessFlag()){
+        	flagIndicator.setText("You have the flag");
+        } else {
+        	flagIndicator.setText("You do not have the flag");
+        }
+        
+        if (mResumed) {
+            mNfcAdapter.enableForegroundNdefPush(PassFlagActivity.this, getNoteAsNdef());
+        }
 
         // Handle all of our received NFC intents in this activity.
         mNfcPendingIntent = PendingIntent.getActivity(this, 0,
@@ -104,7 +94,7 @@ public class NFCActivity extends Activity {
         // NDEF exchange mode
         if (!mWriteMode && NfcAdapter.ACTION_NDEF_DISCOVERED.equals(intent.getAction())) {
             NdefMessage[] msgs = getNdefMessages(intent);
-            propmptUser(msgs[0]);
+            promptForContent(msgs[0]);
         }
 
         // Tag writing mode
@@ -114,36 +104,13 @@ public class NFCActivity extends Activity {
         }
     }
 
-    private TextWatcher mTextWatcher = new TextWatcher() {
-
-        @Override
-        public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {}
-
-        @Override
-        public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {}
-
-        @Override
-        public void afterTextChanged(Editable arg0) {
-            if (mResumed) {
-                mNfcAdapter.enableForegroundNdefPush(NFCActivity.this, getNoteAsNdef());
-            }
-        }
-    };
-
-    private View.OnClickListener messagesButton = new View.OnClickListener() {
-        @Override
-        public void onClick(View arg0) {
-        	Toast.makeText(NFCActivity.this, "TEST", Toast.LENGTH_LONG).show();
-        }
-    };
-
     /**
      * Refactor and store
      * @param msg
      */
-    private void propmptUser(final NdefMessage msg) {
-        new AlertDialog.Builder(this).setTitle("Message Saved!")
-            .setPositiveButton("Okay!", new DialogInterface.OnClickListener() {
+    private void promptForContent(final NdefMessage msg) {
+        new AlertDialog.Builder(this).setTitle("You have received the flag!")
+            .setPositiveButton("Okay", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface arg0, int arg1) {
                     String body = new String(msg.getRecords()[0].getPayload());
@@ -153,13 +120,11 @@ public class NFCActivity extends Activity {
     }
 
     private void setNoteBody(String body) {
-        Editable text = mNote.getText();
-        text.clear();
-        text.append(body);
+    	player.setFlag(true);
     }
 
     private NdefMessage getNoteAsNdef() {
-        byte[] textBytes = mNote.getText().toString().getBytes();
+        byte[] textBytes = "Flag".toString().getBytes();
         NdefRecord textRecord = new NdefRecord(NdefRecord.TNF_MIME_MEDIA, "text/plain".getBytes(),
                 new byte[] {}, textBytes);
         return new NdefMessage(new NdefRecord[] {
@@ -197,7 +162,7 @@ public class NFCActivity extends Activity {
     }
 
     private void enableNdefExchangeMode() {
-        mNfcAdapter.enableForegroundNdefPush(NFCActivity.this, getNoteAsNdef());
+        mNfcAdapter.enableForegroundNdefPush(PassFlagActivity.this, getNoteAsNdef());
         mNfcAdapter.enableForegroundDispatch(this, mNfcPendingIntent, mNdefExchangeFilters, null);
     }
 }

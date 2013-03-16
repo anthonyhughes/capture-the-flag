@@ -4,26 +4,30 @@
     <!-- Strings -->
     <string name="hello">Hello World, CTF!</string>
     <string name="app_name">Capture The Flag!</string>
-    <string name="write_to_tag">Write to a tag!</string>
     <string name="default_note_text">Send a message!</string>
+    <string name="message_button">Send a message!</string>
     <string name="welcome">Welcome to CTF!</string>
+    <string name="nfc_explanation">Type in a message to send via NFC!</string>
+    <string name="comms_choice">Choose an option!</string> 
+    <string name="storage">Stored messages below!</string> 
     
     <!-- Buttons -->
-    <string name="nfc_button">Pass the Flag</string>
-    <string name="bluetooth_button">Check for Enemies</string>
-    <string name="maps_button">Check the map</string>
+    <string name="nfc_button">Pass the Flag!</string>
+    <string name="communication">Interact with other devices!</string>
+    <string name="bluetooth_button">Check for Enemies!</string>
+    <string name="maps_button">Check the map!</string>
     
-    <string name="enemy">Enemies located</string>
-    <string name="enemy_signal">Enemies proximity</string>
     
     <!-- Bluetooth information -->
-    <string name="title_paired_devices">Paired Devices</string>
+    <string name="title_paired_devices">Paired Devices!</string>
     <string name="title_other_devices">Enemies located -</string>
-    <string name="button_scan">Scan for devices</string>
-    <string name="none_found">No enemies found</string>
-    <string name="scanning">Scanning for devices</string>
-    <string name="select_device">Located enemies</string>
-
+    <string name="button_scan">Scan for devices!</string>
+    <string name="none_found">No enemies found!</string>
+    <string name="scanning">Scanning for devices!</string>
+    <string name="select_device">Located enemies!</string>
+    <string name="enemy">Enemies located!</string>
+    <string name="enemy_signal">Enemies proximity -</string>
+    
     <!-- Styles -->
     <style name="ButtonText">
         <item name="android:layout_width">fill_parent</item>
