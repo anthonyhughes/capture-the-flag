@@ -9,7 +9,9 @@
     <string name="welcome">Welcome to CTF!</string>
     <string name="nfc_explanation">Type in a message to send via NFC!</string>
     <string name="comms_choice">Choose an option!</string> 
-    <string name="storage">Stored messages below!</string> 
+    <string name="storage">See stored messages!</string> 
+    <string name="storage2">Message received-</string> 
+    <string name="check">Check game status</string> 
     
     <!-- Buttons -->
     <string name="nfc_button">Pass the Flag!</string>

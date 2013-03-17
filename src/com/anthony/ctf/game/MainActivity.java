@@ -1,17 +1,24 @@
 package com.anthony.ctf.game;
 
+import java.io.IOException;
+
+import org.apache.http.client.ClientProtocolException;
+
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.StrictMode;
+import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 
 import com.anthony.ctf.R;
 import com.anthony.ctf.bluetooth.DeviceListActivity;
 import com.anthony.ctf.maps.MapsActivity;
 import com.anthony.ctf.nfc.CommunicationActivity;
-import com.anthony.ctf.nfc.NFCActivity;
+import com.anthony.ctf.utilities.WebServiceConnector;
 
 public class MainActivity extends Activity {
 	
@@ -19,10 +26,14 @@ public class MainActivity extends Activity {
 	Button nfcButton;
 	Button bluetoothButton;
 	Button mapsButton;
+	Button checkStatus;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		//Work around for HTTP calls
+		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitNetwork().build();
+		StrictMode.setThreadPolicy(policy);
 		setContentView(R.layout.ctf);
 		initialise();
 		
@@ -32,6 +43,9 @@ public class MainActivity extends Activity {
 		findViewById(R.id.button2).setOnClickListener(bluetoothButtonListener);
 		mapsButton = (Button) findViewById(R.id.button3);
 		findViewById(R.id.button3).setOnClickListener(mapsButtonListener);
+		checkStatus = (Button) findViewById(R.id.button4);
+		findViewById(R.id.button4).setOnClickListener(checkListener);
+		
 	}
 	
     private void initialise() {
@@ -63,5 +77,21 @@ public class MainActivity extends Activity {
         	startActivity(maps);
         }
     };	
+    
+	private View.OnClickListener checkListener = new OnClickListener() {
+		
+		@Override
+		public void onClick(View v) {
+			try {
+				String response = WebServiceConnector.fetchGameDocument();
+				Log.d("HTTP - ", response);
+			} catch (ClientProtocolException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+		}
+	};
 	
 }

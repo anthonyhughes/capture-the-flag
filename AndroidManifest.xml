@@ -16,6 +16,7 @@
     <uses-permission android:name="android.permission.NFC" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.WRITE_INTERNAL_STORAGE" />
     <!-- Maps permissions -->
     <uses-permission android:name="com.anthony.ctf.permission.MAPS_RECEIVE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -63,6 +64,7 @@
             android:label="@string/select_device" />
         <activity android:name="com.anthony.ctf.maps.MapsActivity" />
         <activity android:name="com.anthony.ctf.nfc.CommunicationActivity" />
+        <activity android:name="com.anthony.ctf.nfc.MessagesListActivity"/>
         <activity android:name="com.anthony.ctf.nfc.PassFlagActivity">
             <intent-filter>
                 <action android:name="android.nfc.action.NDEF_DISCOVERED" />

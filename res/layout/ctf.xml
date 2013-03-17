@@ -42,4 +42,13 @@
         android:layout_marginTop="48dp"
         android:text="@string/bluetooth_button" />
 
+    <Button
+        android:id="@+id/button4"
+        style="@style/ButtonText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/button1"
+        android:layout_centerHorizontal="true"
+        android:text="@string/check" />
+
 </RelativeLayout>
