@@ -16,16 +16,16 @@
     <!-- Buttons -->
     <string name="nfc_button">Pass the Flag!</string>
     <string name="communication">Interact with other devices!</string>
-    <string name="bluetooth_button">Check for Enemies!</string>
+    <string name="bluetooth_button">Check for nearby enemies!</string>
     <string name="maps_button">Check the map!</string>
     
     
     <!-- Bluetooth information -->
     <string name="title_paired_devices">Paired Devices!</string>
     <string name="title_other_devices">Enemies located -</string>
-    <string name="button_scan">Scan for devices!</string>
+    <string name="button_scan">Scan for enemies!</string>
     <string name="none_found">No enemies found!</string>
-    <string name="scanning">Scanning for devices!</string>
+    <string name="scanning">Scanning for enemies!</string>
     <string name="select_device">Located enemies!</string>
     <string name="enemy">Enemies located!</string>
     <string name="enemy_signal">Enemies proximity -</string>

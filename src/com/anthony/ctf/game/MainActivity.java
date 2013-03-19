@@ -15,7 +15,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 
 import com.anthony.ctf.R;
-import com.anthony.ctf.bluetooth.DeviceListActivity;
+import com.anthony.ctf.bluetooth.EnemyDetectionActivity;
 import com.anthony.ctf.maps.MapsActivity;
 import com.anthony.ctf.nfc.CommunicationActivity;
 import com.anthony.ctf.utilities.WebServiceConnector;
@@ -65,7 +65,7 @@ public class MainActivity extends Activity {
     private View.OnClickListener bluetoothButtonListener = new View.OnClickListener() {
         @Override
         public void onClick(View arg0) {
-        	Intent bluetooth = new Intent(MainActivity.this, DeviceListActivity.class);
+        	Intent bluetooth = new Intent(MainActivity.this, EnemyDetectionActivity.class);
         	startActivity(bluetooth);
         }
     };
