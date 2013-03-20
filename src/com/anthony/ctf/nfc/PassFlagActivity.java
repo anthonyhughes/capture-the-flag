@@ -16,12 +16,10 @@ import android.os.Parcelable;
 import android.widget.TextView;
 
 import com.anthony.ctf.R;
-import com.anthony.ctf.game.Player;
 import com.anthony.ctf.nfc.utilities.NFCHelper;
 
 public class PassFlagActivity extends Activity {
 	
-	Player player;
     TextView flagIndicator;
     
     NfcAdapter mNfcAdapter;
@@ -40,13 +38,6 @@ public class PassFlagActivity extends Activity {
         
         setContentView(R.layout.pass_flag);
         flagIndicator = (TextView) findViewById(R.id.indicator);
-        player = new Player();
-        
-        if(player.possessFlag()){
-        	flagIndicator.setText("You have the flag");
-        } else {
-        	flagIndicator.setText("You do not have the flag");
-        }
         
         if (mResumed) {
             mNfcAdapter.enableForegroundNdefPush(PassFlagActivity.this, getNoteAsNdef());
@@ -120,7 +111,7 @@ public class PassFlagActivity extends Activity {
     }
 
     private void setNoteBody(String body) {
-    	player.setFlag(true);
+    	//
     }
 
     private NdefMessage getNoteAsNdef() {

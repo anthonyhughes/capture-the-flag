@@ -1,5 +1,10 @@
 package com.anthony.ctf.bluetooth;
 
+import java.io.IOException;
+
+import org.apache.http.client.ClientProtocolException;
+import org.w3c.dom.Document;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.bluetooth.BluetoothAdapter;
@@ -10,7 +15,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -23,13 +27,9 @@ import android.widget.TextView;
 
 import com.anthony.ctf.R;
 import com.anthony.ctf.utilities.AndroidHelper;
+import com.anthony.ctf.utilities.StringHelper;
+import com.anthony.ctf.utilities.WebServiceConnector;
 
-/**
- * This Activity appears as a dialog. It lists any paired devices and
- * devices detected in the area after discovery. When a device is chosen
- * by the user, the MAC address of the device is sent back to the parent
- * Activity in the result Intent.
- */
 public class EnemyDetectionActivity extends Activity {
     // Return Intent extra
     public static String EXTRA_DEVICE_ADDRESS = "device_address";
@@ -58,8 +58,6 @@ public class EnemyDetectionActivity extends Activity {
             }
         });
 
-        // Initialize array adapters. One for already paired devices and
-        // one for newly discovered devices
         newDevices = new ArrayAdapter<String>(this, R.layout.device);
 
         // Find and set up the ListView for newly discovered devices
@@ -123,23 +121,50 @@ public class EnemyDetectionActivity extends Activity {
         public void onItemClick(AdapterView<?> av, View v, int arg2, long arg3) {
             bluetoothAdapter.cancelDiscovery();
             String info = ((TextView) v).getText().toString();
-            String[] address = info.split("\n");
-            int proximity = Integer.parseInt(address[2].split(" ")[2]);
+            String[] data = info.split("\n");
+            int proximity = Integer.parseInt(data[2].split(" ")[2]);
+            String onClickName = data[0].split(" ")[2]; 
+            String currentFlagHolder = "";
+            try {
+				currentFlagHolder = WebServiceConnector.retrieveNameOfFlagHolder();
+			} catch (ClientProtocolException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+            //If use is close to enemy then continue
             if(Math.abs(proximity) < 50){
-                new AlertDialog.Builder(EnemyDetectionActivity.this).setTitle("Flag Located. Take the flag?!!")
-                .setPositiveButton("Okay!", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface arg0, int arg1) {
-                    	//
-                    }
-                })
-                .setNegativeButton("No!", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface arg0, int arg1) {
-                    	//
-                    }
-                })
-                .show();
+            	//if the clicked user has flag then raise dialog
+            	if(onClickName.equals(currentFlagHolder)){
+	                new AlertDialog.Builder(EnemyDetectionActivity.this).setTitle("Flag Located. Take the flag?!!")
+	                .setPositiveButton("Okay!", new DialogInterface.OnClickListener() {
+	                    @Override
+	                    public void onClick(DialogInterface arg0, int arg1) {
+	                    	//Update
+	        				try {
+								String document = WebServiceConnector.fetchGameDocument();
+								Document update = StringHelper.stringToXmlDoc(document);
+								update.getChildNodes().item(0).getChildNodes().item(0).setTextContent(bluetoothAdapter.getName());
+								WebServiceConnector.updateGameDocument(update);
+							} catch (ClientProtocolException e) {
+								e.printStackTrace();
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+	                    	AndroidHelper.toast(EnemyDetectionActivity.this, "You now have the flag. RUN!");
+	                    }
+	                })
+	                .setNegativeButton("No!", new DialogInterface.OnClickListener() {
+	                    @Override
+	                    public void onClick(DialogInterface arg0, int arg1) {
+	                    	//
+	                    }
+	                })
+	                .show();
+            	} else {
+            		AndroidHelper.toast(EnemyDetectionActivity.this, "This enemy does not possess the flag.");
+            	}
+                //else do nothing
             } else {
             	AndroidHelper.toast(EnemyDetectionActivity.this, "Get closer to your enemy!");
             }
