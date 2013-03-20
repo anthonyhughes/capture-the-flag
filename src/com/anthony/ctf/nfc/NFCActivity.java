@@ -52,9 +52,9 @@ public class NFCActivity extends Activity {
     
     public boolean resumed = false;
     public boolean writeMode = false;
-    PendingIntent mNfcPendingIntent;
-    IntentFilter[] mWriteTagFilters;
-    IntentFilter[] mNdefExchangeFilters;
+    PendingIntent nfcPendingIntent;
+    IntentFilter[] writeTagFilters;
+    IntentFilter[] ndefExchangeFilters;
 
     /** Called when the activity is first created. */
     @Override
@@ -71,7 +71,7 @@ public class NFCActivity extends Activity {
         
         
         // Handle all of our received NFC intents in this activity.
-        mNfcPendingIntent = PendingIntent.getActivity(this, 0,
+        nfcPendingIntent = PendingIntent.getActivity(this, 0,
                 new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
 
         // Intent filters for reading a note from a tag or exchanging over p2p.
@@ -79,11 +79,11 @@ public class NFCActivity extends Activity {
         try {
             ndefDetected.addDataType("text/plain");
         } catch (MalformedMimeTypeException e) { }
-        mNdefExchangeFilters = new IntentFilter[] { ndefDetected };
+        ndefExchangeFilters = new IntentFilter[] { ndefDetected };
 
         // Intent filters for writing to a tag
         IntentFilter tagDetected = new IntentFilter(NfcAdapter.ACTION_TAG_DISCOVERED);
-        mWriteTagFilters = new IntentFilter[] { tagDetected };
+        writeTagFilters = new IntentFilter[] { tagDetected };
     }
 
     @Override
@@ -213,6 +213,6 @@ public class NFCActivity extends Activity {
 
     private void enableNdefExchangeMode() {
         nfcAdapter.enableForegroundNdefPush(NFCActivity.this, getNoteAsNdef());
-        nfcAdapter.enableForegroundDispatch(this, mNfcPendingIntent, mNdefExchangeFilters, null);
+        nfcAdapter.enableForegroundDispatch(this, nfcPendingIntent, ndefExchangeFilters, null);
     }
 }

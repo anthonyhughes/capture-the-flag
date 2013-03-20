@@ -11,8 +11,6 @@ public class XmlDocumentHelper {
 		Element player = doc.createElement("player");
 		Node name = doc.createElement("name");
 		name.setTextContent(user);
-		Node flag = doc.createElement("flag");
-		flag.setTextContent("no");
 		Node id = doc.createElement("id");
 		id.setTextContent(addy);
 		Node loc = doc.createElement("location");
@@ -24,7 +22,6 @@ public class XmlDocumentHelper {
 		loc.appendChild(lati);
 		loc.appendChild(lngi);					
 		player.appendChild(name);
-		player.appendChild(flag);
 		player.appendChild(id);
 		player.appendChild(loc);
 		return player;

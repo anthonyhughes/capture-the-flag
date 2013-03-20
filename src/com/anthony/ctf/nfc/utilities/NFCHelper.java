@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import android.content.Context;
 import android.nfc.NdefMessage;
+import android.nfc.NdefRecord;
 import android.nfc.Tag;
 import android.nfc.tech.Ndef;
 import android.nfc.tech.NdefFormatable;
@@ -61,6 +62,13 @@ public class NFCHelper {
 		}
 
 		return false;
+	}
+	
+	public static NdefMessage getStringAsNdef(String message) {
+		byte[] textBytes = message.getBytes();
+		NdefRecord textRecord = new NdefRecord(NdefRecord.TNF_MIME_MEDIA,
+				"text/plain".getBytes(), new byte[] {}, textBytes);
+		return new NdefMessage(new NdefRecord[] { textRecord });
 	}
 
 }

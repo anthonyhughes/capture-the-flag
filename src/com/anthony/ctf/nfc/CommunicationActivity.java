@@ -2,6 +2,7 @@ package com.anthony.ctf.nfc;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.nfc.NfcAdapter;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -12,6 +13,7 @@ public class CommunicationActivity extends Activity {
 	
 	Button nfcButton;
 	Button messageButton;
+    NfcAdapter nfcAdapter;
 	
 	@Override
 	public void onCreate(Bundle savedInstance){
@@ -22,6 +24,7 @@ public class CommunicationActivity extends Activity {
 		findViewById(R.id.ptf).setOnClickListener(nfcClick);
 		messageButton = (Button) findViewById(R.id.pam);
 		findViewById(R.id.pam).setOnClickListener(messageClick);
+        nfcAdapter = NfcAdapter.getDefaultAdapter(this);
 	}
 	
 	private View.OnClickListener nfcClick = new View.OnClickListener() {

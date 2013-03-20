@@ -3,6 +3,9 @@ package com.anthony.ctf.nfc;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import com.anthony.ctf.utilities.FileHelper;
 
@@ -11,16 +14,26 @@ import android.os.Bundle;
 
 public class MessagesListActivity extends ListActivity {
 
-    public String[] values;
+    public String[] values = {};
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
     	readMessagesFromFile();
+    	cleanValues();
     	setListAdapter(new MessagesArrayAdapter(this, values));
     }
     
-    private void readMessagesFromFile(){
+    
+    private void cleanValues() {
+        final List<String> list =  new ArrayList<String>();
+        Collections.addAll(list, values); 
+        list.remove(list.size() - 1);
+        values = list.toArray(new String[list.size()]);
+	}
+
+
+	private void readMessagesFromFile(){
     	FileInputStream inputStream;
 		try {
 			inputStream = openFileInput(FileHelper.FILENAME);

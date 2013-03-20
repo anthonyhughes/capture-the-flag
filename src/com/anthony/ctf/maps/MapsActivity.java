@@ -19,6 +19,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.maps.MapController;
 
 public class MapsActivity extends Activity {
 
@@ -46,9 +47,9 @@ public class MapsActivity extends Activity {
 			for (int i = 0; i < players.getLength(); i++) {
 				Node node = players.item(i);
 				LatLng enemyLatLng = new LatLng(Double.parseDouble(node
-						.getChildNodes().item(3).getChildNodes().item(0)
+						.getChildNodes().item(2).getChildNodes().item(0)
 						.getTextContent()), Double.parseDouble(node
-						.getChildNodes().item(3).getChildNodes().item(1)
+						.getChildNodes().item(2).getChildNodes().item(1)
 						.getTextContent()));
 				map.addMarker(new MarkerOptions()
 						.position(enemyLatLng).title(node.getChildNodes().item(0).getTextContent())

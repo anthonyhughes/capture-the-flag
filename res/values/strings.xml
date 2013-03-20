@@ -7,6 +7,7 @@
     <string name="default_note_text">Send a message!</string>
     <string name="message_button">Send a message!</string>
     <string name="welcome">Welcome to CTF!</string>
+    <string name="welcome">Use NFC to pass the flag!</string>
     <string name="nfc_explanation">Type in a message to send via NFC!</string>
     <string name="comms_choice">Choose an option!</string> 
     <string name="storage">See stored messages!</string> 

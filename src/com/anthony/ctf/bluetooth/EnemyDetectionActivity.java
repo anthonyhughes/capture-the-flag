@@ -15,6 +15,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -61,9 +62,9 @@ public class EnemyDetectionActivity extends Activity {
         newDevices = new ArrayAdapter<String>(this, R.layout.device);
 
         // Find and set up the ListView for newly discovered devices
-        ListView newDevicesListView = (ListView) findViewById(R.id.new_devices);
-        newDevicesListView.setAdapter(newDevices);
-        newDevicesListView.setOnItemClickListener(mDeviceClickListener);
+        ListView enemyListView = (ListView) findViewById(R.id.new_devices);
+        enemyListView.setAdapter(newDevices);
+        enemyListView.setOnItemClickListener(mDeviceClickListener);
 
         // Register for broadcasts when a device is discovered
         IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
